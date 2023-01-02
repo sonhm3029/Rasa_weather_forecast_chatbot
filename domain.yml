@@ -8,6 +8,9 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - weather
+  - info_date
+  - info_address
 
 responses:
   utter_greet:
@@ -28,6 +31,49 @@ responses:
 
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
+
+  utter_default:
+  - text: Sorry, The system does not understand what you are saying
+
+  utter_ask_address:
+  - text: Where?
+
+  utter_ask_date-time:
+  - text: When?
+
+
+entities:
+  - address
+  - date-time
+
+slots:
+  address:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: address
+
+  date-time:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: date-time    
+
+actions:
+  - utter_ask_address
+  - utter_ask_date-time
+  - utter_goodbye
+  - utter_greet
+  - utter_default
+  - action_weather_form_submit
+
+forms:
+  weather_form:
+    required_slots:
+      - address
+      - date-time
 
 session_config:
   session_expiration_time: 60

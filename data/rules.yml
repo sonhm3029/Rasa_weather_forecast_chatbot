@@ -11,3 +11,19 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+- rule: activate weather form
+  steps:
+  - intent: weather
+  - action: weather_form
+  - active_loop: weather_form
+
+- rule: Submit form
+  condition:
+  - active_loop: weather_form
+  steps:
+  - action: weather_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_weather_form_submit
